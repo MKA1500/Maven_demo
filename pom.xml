@@ -31,7 +31,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>io.github.mat3e.App</mainClass>
+                            <mainClass>com.maciej.App</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

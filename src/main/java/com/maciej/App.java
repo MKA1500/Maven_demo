@@ -1,7 +1,7 @@
 package com.maciej;
 
 public class App {
-	public String Sample() {
-		return "samle";
-	}
+    public static void main(String[] args) {
+        System.out.println("Hello World!");
+    }
 }
