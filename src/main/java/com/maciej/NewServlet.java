@@ -15,6 +15,7 @@ public class NewServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		logger.info("got request!");
 		resp.getWriter().write("Hello World");
 	}
 	
