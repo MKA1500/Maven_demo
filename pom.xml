@@ -40,7 +40,18 @@
 		    <artifactId>javax.servlet-api</artifactId>
 		    <version>4.0.1</version>
 		    <scope>provided</scope>
-		</dependency>		
+		</dependency>
+		<!-- jetty -->
+		<dependency>
+		    <groupId>org.eclipse.jetty</groupId>
+		    <artifactId>jetty-plus</artifactId>
+		    <version>${jetty.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.eclipse.jetty</groupId>
+		    <artifactId>jetty-annotations</artifactId>
+		    <version>${jetty.version}</version>
+		</dependency>
    </dependencies>
    
    <build>
