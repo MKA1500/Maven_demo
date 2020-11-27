@@ -3,7 +3,7 @@
   <groupId>com.maciej</groupId>
   <artifactId>maven-demo</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
+  <packaging>war</packaging>
   
   <name>Maven Demo</name>
   
@@ -12,6 +12,7 @@
        <java.version>11</java.version>
        <junit.version>4.13.1</junit.version>
        <slf4j.version>1.7.30</slf4j.version>
+       <jetty.version>9.4.14.v20181114</jetty.version>
    </properties>
   
   <dependencies>
@@ -44,6 +45,11 @@
    
    <build>
         <plugins>
+			<plugin>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>${jetty.version}</version>
+			</plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
