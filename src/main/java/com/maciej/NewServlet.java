@@ -13,7 +13,8 @@ import org.slf4j.LoggerFactory;
 
 @WebServlet(name = "Hello", urlPatterns = {"/api/*"})
 public class NewServlet extends HttpServlet {
-	private static final String NAME_PAREM = "name";	
+	private static final String NAME_PAREM = "name";
+	private static final String LANG_PAREM = "lang";	
 	private final Logger logger = LoggerFactory.getLogger(NewServlet.class);
 
 	private NewService service;
@@ -34,7 +35,8 @@ public class NewServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		logger.info("Got request with parameters " + req.getParameterMap());
 		String name = req.getParameter(NAME_PAREM);
-		String greeting = service.prepareGreeting(name);
+		String lang = req.getParameter(LANG_PAREM);
+		String greeting = service.prepareGreeting(name, lang);
 		resp.getWriter().write(greeting);
 	}
 	
