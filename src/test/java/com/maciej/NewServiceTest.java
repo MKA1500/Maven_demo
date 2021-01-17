@@ -1,35 +1,45 @@
 package com.maciej;
 
 import static org.junit.Assert.assertEquals;
+ 
+import java.util.Optional;
 
 import org.junit.Test;
 
 public class NewServiceTest {
-	/*
-	 * system under service...
-	 */
-	private NewService SUT = new NewService();
+	private final static String WELCOME = "Hello";
 	@Test
-    public void test_prepareGreeting_null_returnsWithFallback() {
+    public void test_prepareGreeting_nullName_returnsWithFallbackName() {
 		// given
-		String name = null;
+		var mockRepo = alwaysReturnHelloRepo();
+		var SUT = new NewService(mockRepo);
 		
 		// when 
-		String result = SUT.prepareGreeting(name);
+		var result = SUT.prepareGreeting(null, "-1");
 		
 		// then
 		// (expected, result)
-		assertEquals("Hello " + NewService.FALLBACK_NAME + "!", result);
+		assertEquals(WELCOME + " " + NewService.FALLBACK_NAME + "!", result);
     }
 	
-	public void test_prepareGreeting_name_returnsWithName() {
+	public void test_prepareGreeting_name_returnsGreetingWithName() {
 		// given
+		var SUT = new NewService();
 		String name = "test";
 		
 		// when 
-		String result = SUT.prepareGreeting(name);
+		var result = SUT.prepareGreeting(name, "-1");
 		
 		// then
-		assertEquals("Hello " + name + "!", result);
+		assertEquals(WELCOME + " " + name + "!", result);
     }
+	
+	private LangRepo alwaysReturnHelloRepo() {
+		return new LangRepo() {
+			@Override
+			Optional<Lang> findById(Long id) {
+				return Optional.of(new Lang(null, WELCOME,  null));
+			}
+		};
+	}
 }
