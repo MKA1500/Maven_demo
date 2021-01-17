@@ -34,6 +34,29 @@ public class NewServiceTest {
 		assertEquals(WELCOME + " " + name + "!", result);
     }
 	
+	public void test_prepareGreeting_nullLang_returnsGreetingWithFallbackIdLang() {
+		// given
+		var fallbackIdWelcome = "Hola";
+		var mockRepo = new LangRepo() {
+
+			@Override
+			Optional<Lang> findById(Long id) {
+				if (id.equals(NewService.FALLBACK_LANG.getId())) {
+					return Optional.of(new Lang(null, fallbackIdWelcome, null));
+				}
+				return Optional.empty();
+			}
+			
+		};
+		var SUT = new NewService();
+		
+		// when 
+		var result = SUT.prepareGreeting(null, null);
+		
+		// then
+		assertEquals(WELCOME + " " + NewService.FALLBACK_NAME + "!", result);
+    }
+	
 	private LangRepo alwaysReturnHelloRepo() {
 		return new LangRepo() {
 			@Override
