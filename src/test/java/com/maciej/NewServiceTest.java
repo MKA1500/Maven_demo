@@ -8,6 +8,7 @@ import org.junit.Test;
 
 public class NewServiceTest {
 	private final static String WELCOME = "Hello";
+	private final static String FALLBACK_ID_WELCOME = "Salut";
 	@Test
     public void test_prepareGreeting_nullName_returnsWithFallbackName() {
 		// given
@@ -36,32 +37,49 @@ public class NewServiceTest {
 	
 	public void test_prepareGreeting_nullLang_returnsGreetingWithFallbackIdLang() {
 		// given
-		var fallbackIdWelcome = "Hola";
-		var mockRepo = new LangRepo() {
-
-			@Override
-			Optional<Lang> findById(Long id) {
-				if (id.equals(NewService.FALLBACK_LANG.getId())) {
-					return Optional.of(new Lang(null, fallbackIdWelcome, null));
-				}
-				return Optional.empty();
-			}
-			
-		};
+		var mockRepo = fallbackLangIdRepo();
 		var SUT = new NewService();
 		
 		// when 
 		var result = SUT.prepareGreeting(null, null);
 		
 		// then
-		assertEquals(WELCOME + " " + NewService.FALLBACK_NAME + "!", result);
+		assertEquals(FALLBACK_ID_WELCOME + " " + NewService.FALLBACK_NAME + "!", result);
     }
+	
+	public void test_prepareGreeting_textLang_returnsGreetingWithFallbackIdLang() {
+		// given
+		var mockRepo = fallbackLangIdRepo();
+		var SUT = new NewService();
+		
+		// when 
+		var result = SUT.prepareGreeting(null, "abc");
+		
+		// then
+		assertEquals(FALLBACK_ID_WELCOME + " " + NewService.FALLBACK_NAME + "!", result);
+    }
+	
+	private LangRepo fallbackLangIdRepo() {
+		return new LangRepo() {
+
+			@Override
+			Optional<Lang> findById(Long id) {
+				if (id.equals(NewService.FALLBACK_LANG.getId())) {
+					Lang newLang = new Lang(null, FALLBACK_ID_WELCOME, null);
+					return Optional.of(newLang);
+				}
+				return Optional.empty();
+			}
+			
+		};
+	}
 	
 	private LangRepo alwaysReturnHelloRepo() {
 		return new LangRepo() {
 			@Override
 			Optional<Lang> findById(Long id) {
-				return Optional.of(new Lang(null, WELCOME,  null));
+				Lang newLang = new Lang(null, WELCOME,  null);
+				return Optional.of(newLang);
 			}
 		};
 	}
