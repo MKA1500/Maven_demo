@@ -14,7 +14,7 @@ public class LangRepo {
 		languages.add(new Lang(3L, "Hallo", "nl"));
 	}
 	
-	// Optional in case something will go wrong...
+	// Optional to not return null...
 	Optional<Lang> findById(Long id) {
 		return languages.stream()
 				.filter(l -> l.getId().equals(id))
